@@ -36,6 +36,18 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+.font-syne {
+  font-family: 'Syne', sans-serif;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+}
+
+.font-outfit {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.03em;
+  font-weight: 900;
+}
+
 @keyframes marquee-scroll {
   0% {
     transform: translateX(0);

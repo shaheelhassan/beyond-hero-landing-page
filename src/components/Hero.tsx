@@ -1,9 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
+import type { ThemePalette } from '../utils/theme'
 
 const LEFT_WORDS = ['spark', 'imagine', 'evolve', 'render']
 const RIGHT_WORDS = ['blaze', 'genesis', 'purpose', 'ignite']
 
-export const Hero: React.FC = () => {
+interface HeroProps {
+  theme: ThemePalette
+  fontClass: string
+}
+
+export const Hero: React.FC<HeroProps> = ({ theme, fontClass }) => {
   const sectionRef = useRef<HTMLElement>(null)
   const [progress, setProgress] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
@@ -27,7 +33,6 @@ export const Hero: React.FC = () => {
       }
     }
 
-    // Run once on mount
     handleScrollAndResize()
 
     window.addEventListener('scroll', handleScrollAndResize, { passive: true })
@@ -43,10 +48,10 @@ export const Hero: React.FC = () => {
   const opacity = 0.35 + progress * 0.65
 
   // Layer vertical offsets for "BEYOND"
-  // Layer 0 (back): #89CFF0 -> 36px (desktop) / 18px (mobile)
-  // Layer 1: #EC612C -> 24px (desktop) / 12px (mobile)
-  // Layer 2: #90EE90 -> 12px (desktop) / 6px (mobile)
-  // Layer 3 (front): #FFFFFF -> 0px
+  // Layer 0 (back) -> 36px (desktop) / 18px (mobile)
+  // Layer 1 (gap)  -> 24px (desktop) / 12px (mobile)
+  // Layer 2 (mid)  -> 12px (desktop) / 6px (mobile)
+  // Layer 3 (front)-> 0px
   const layer0Offset = isMobile ? 18 : 36
   const layer1Offset = isMobile ? 12 : 24
   const layer2Offset = isMobile ? 6 : 12
@@ -55,10 +60,10 @@ export const Hero: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden"
+      className="relative w-full overflow-hidden transition-colors duration-500 ease-out"
       style={{
         height: '120vh',
-        backgroundColor: '#EC612C',
+        backgroundColor: theme.bgColor,
       }}
     >
       {/* SECTION 1 - B. Sticky text overlay (z-index 5) */}
@@ -66,11 +71,11 @@ export const Hero: React.FC = () => {
         {/* "BEYOND" stacked title */}
         <div className="absolute inset-0 flex items-start justify-center pt-[2vh] md:pt-[3vh] pointer-events-none">
           <div className="relative inline-block text-center">
-            {/* Layer 0 (back) - Blue */}
+            {/* Layer 0 (back) */}
             <h1
-              className="font-bamboly absolute top-0 left-0 w-full text-center leading-[0.85] tracking-tight select-none pointer-events-none"
+              className={`${fontClass} absolute top-0 left-0 w-full text-center leading-[0.85] tracking-tight select-none pointer-events-none transition-colors duration-500`}
               style={{
-                color: '#89CFF0',
+                color: theme.beyondLayer0,
                 fontSize: 'clamp(7.5rem, 30vw, 28rem)',
                 transform: `translateY(${layer0Offset}px)`,
               }}
@@ -78,11 +83,11 @@ export const Hero: React.FC = () => {
               BEYOND
             </h1>
 
-            {/* Layer 1 - Orange gap (same as bg) */}
+            {/* Layer 1 (gap, matches bg) */}
             <h1
-              className="font-bamboly absolute top-0 left-0 w-full text-center leading-[0.85] tracking-tight select-none pointer-events-none"
+              className={`${fontClass} absolute top-0 left-0 w-full text-center leading-[0.85] tracking-tight select-none pointer-events-none transition-colors duration-500`}
               style={{
-                color: '#EC612C',
+                color: theme.beyondLayer1,
                 fontSize: 'clamp(7.5rem, 30vw, 28rem)',
                 transform: `translateY(${layer1Offset}px)`,
               }}
@@ -90,11 +95,11 @@ export const Hero: React.FC = () => {
               BEYOND
             </h1>
 
-            {/* Layer 2 - Green */}
+            {/* Layer 2 (middle) */}
             <h1
-              className="font-bamboly absolute top-0 left-0 w-full text-center leading-[0.85] tracking-tight select-none pointer-events-none"
+              className={`${fontClass} absolute top-0 left-0 w-full text-center leading-[0.85] tracking-tight select-none pointer-events-none transition-colors duration-500`}
               style={{
-                color: '#90EE90',
+                color: theme.beyondLayer2,
                 fontSize: 'clamp(7.5rem, 30vw, 28rem)',
                 transform: `translateY(${layer2Offset}px)`,
               }}
@@ -102,11 +107,11 @@ export const Hero: React.FC = () => {
               BEYOND
             </h1>
 
-            {/* Layer 3 (front) - White */}
+            {/* Layer 3 (front) */}
             <h1
-              className="font-bamboly relative text-center leading-[0.85] tracking-tight select-none pointer-events-none"
+              className={`${fontClass} relative text-center leading-[0.85] tracking-tight select-none pointer-events-none transition-colors duration-500`}
               style={{
-                color: '#FFFFFF',
+                color: theme.beyondFront,
                 fontSize: 'clamp(7.5rem, 30vw, 28rem)',
                 transform: `translateY(${layer3Offset}px)`,
               }}
@@ -123,7 +128,7 @@ export const Hero: React.FC = () => {
         >
           {/* Left Column */}
           <div
-            className="flex flex-col gap-1 md:gap-2"
+            className="flex flex-col gap-1 md:gap-2 transition-opacity duration-150"
             style={{ opacity }}
           >
             {LEFT_WORDS.map((word, i) => {
@@ -131,13 +136,14 @@ export const Hero: React.FC = () => {
               return (
                 <span
                   key={word}
-                  className="font-poppins uppercase text-white/80 select-none block"
+                  className="font-poppins uppercase select-none block transition-colors duration-500"
                   style={{
+                    color: theme.sideWordColor,
                     fontWeight: 500,
                     fontSize: 'clamp(1.6rem, 7vw, 9rem)',
                     lineHeight: 1.1,
                     transform: `translateX(${leftOffset}px)`,
-                    transition: 'transform 0.05s linear',
+                    transition: 'transform 0.05s linear, color 0.5s ease',
                   }}
                 >
                   {word}
@@ -148,7 +154,7 @@ export const Hero: React.FC = () => {
 
           {/* Right Column */}
           <div
-            className="flex flex-col gap-1 md:gap-2 items-end"
+            className="flex flex-col gap-1 md:gap-2 items-end transition-opacity duration-150"
             style={{ opacity }}
           >
             {RIGHT_WORDS.map((word, i) => {
@@ -156,13 +162,14 @@ export const Hero: React.FC = () => {
               return (
                 <span
                   key={word}
-                  className="font-poppins uppercase text-white/80 select-none block text-right"
+                  className="font-poppins uppercase select-none block text-right transition-colors duration-500"
                   style={{
+                    color: theme.sideWordColor,
                     fontWeight: 500,
                     fontSize: 'clamp(1.6rem, 7vw, 9rem)',
                     lineHeight: 1.1,
                     transform: `translateX(${rightOffset}px)`,
-                    transition: 'transform 0.05s linear',
+                    transition: 'transform 0.05s linear, color 0.5s ease',
                   }}
                 >
                   {word}
