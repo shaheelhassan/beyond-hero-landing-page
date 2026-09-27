@@ -1,32 +1,42 @@
-# React + TypeScript + Vite
+# Beyond Hero Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A pixel-for-pixel recreation of the **Beyond Hero** landing page built with React, Vite, TypeScript, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Pixel-for-Pixel Typography**:
+  - Retro stacked 4-layer `BEYOND` title using `Bamboly Demo` font (Blue `#89CFF0`, Orange `#EC612C`, Green `#90EE90`, White `#FFFFFF`).
+  - Side word columns (Left: `SPARK`, `IMAGINE`, `EVOLVE`, `RENDER`; Right: `BLAZE`, `GENESIS`, `PURPOSE`, `IGNITE`) using Google Fonts `Poppins` (weight 500).
+- **Exact Scroll-Driven Animation**:
+  - Sticky text overlay across a `120vh` hero section.
+  - Horizontal translation of word columns sliding inward to `0` based on exact math:
+    - `leftOffset[i] = -(60 + i * 40) * scaleFactor * (1 - progress)`
+    - `rightOffset[i] = +(60 + i * 40) * scaleFactor * (1 - progress)`
+  - Dynamic opacity transition from `0.35` to `1.0`.
+  - Responsive breakpoint handling (desktop vs `<768px` mobile scale factor of `0.5`).
+- **Hero Character**:
+  - 3D bust of young Black man with electric-blue braids and neon-green turtleneck.
+  - Anchored at bottom center with `115%` height, overlapping the title at `z-index: 10`.
+- **Seamless Infinite Marquee**:
+  - Full-width band with 4 seamless copies of `SPARK · RENDER · IGNITE · UNFOLD · GENESIS · EVOLVE · PURPOSE · BEYOND ·`.
+  - 18s linear infinite loop with zero layout shifts.
 
-## React Compiler
+## 🛠 Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19**
+- **Vite 6**
+- **TypeScript**
+- **Tailwind CSS v4**
 
-## Expanding the Oxlint configuration
+## 💻 Getting Started
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+```bash
+# Install dependencies
+npm install
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+# Start local development server
+npm run dev
+
+# Build for production
+npm run build
 ```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
