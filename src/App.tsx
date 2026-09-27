@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Hero } from './components/Hero'
 import { Marquee } from './components/Marquee'
 import { HeaderNav } from './components/HeaderNav'
@@ -8,11 +8,26 @@ import { PRESET_THEMES, FONT_OPTIONS, generateRandomTheme, type ThemePalette } f
 export const App: React.FC = () => {
   const [theme, setTheme] = useState<ThemePalette>(PRESET_THEMES[0])
   const [fontIndex, setFontIndex] = useState(0)
+  const [isAutoChange, setIsAutoChange] = useState(true)
+
+  // Automatically transition colors on interval
+  useEffect(() => {
+    if (!isAutoChange) return
+
+    const interval = setInterval(() => {
+      setTheme(generateRandomTheme())
+    }, 3500)
+
+    return () => clearInterval(interval)
+  }, [isAutoChange])
 
   const handleRandomColor = () => {
-    // Generate a fresh harmonious random palette
     const newTheme = generateRandomTheme()
     setTheme(newTheme)
+  }
+
+  const handleToggleAutoChange = () => {
+    setIsAutoChange((prev) => !prev)
   }
 
   const handleToggleFont = () => {
@@ -29,6 +44,8 @@ export const App: React.FC = () => {
         onToggleFont={handleToggleFont}
         currentFontName={currentFont.name}
         currentBgColor={theme.bgColor}
+        isAutoChange={isAutoChange}
+        onToggleAutoChange={handleToggleAutoChange}
       />
 
       {/* Development Notice Modal */}

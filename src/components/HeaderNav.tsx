@@ -5,6 +5,8 @@ interface HeaderNavProps {
   onToggleFont: () => void
   currentFontName: string
   currentBgColor: string
+  isAutoChange: boolean
+  onToggleAutoChange: () => void
 }
 
 export const HeaderNav: React.FC<HeaderNavProps> = ({
@@ -12,26 +14,46 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
   onToggleFont,
   currentFontName,
   currentBgColor,
+  isAutoChange,
+  onToggleAutoChange,
 }) => {
   return (
     <header className="fixed top-4 right-4 sm:top-6 sm:right-6 z-40 flex items-center gap-2 sm:gap-3 select-none">
-      {/* Random Color Button */}
+      {/* Auto Color Toggle */}
+      <button
+        onClick={onToggleAutoChange}
+        className={`flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-full border text-xs sm:text-sm font-medium tracking-wide backdrop-blur-md shadow-xl transition-all duration-200 cursor-pointer ${
+          isAutoChange
+            ? 'bg-black/75 border-[#90EE90]/60 text-white hover:border-[#90EE90]'
+            : 'bg-black/50 border-white/20 text-white/70 hover:text-white hover:border-white/40'
+        }`}
+        title={isAutoChange ? 'Auto color change is ON. Click to pause.' : 'Auto color change is PAUSED. Click to resume.'}
+      >
+        <span
+          className={`w-2.5 h-2.5 rounded-full ${
+            isAutoChange ? 'bg-[#90EE90] animate-pulse shadow-[0_0_8px_#90EE90]' : 'bg-white/40'
+          }`}
+        />
+        <span className="hidden xs:inline">{isAutoChange ? 'Auto' : 'Paused'}</span>
+      </button>
+
+      {/* Manual Random Color Button */}
       <button
         onClick={onRandomColor}
         className="flex items-center gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-full bg-black/60 hover:bg-black/90 border border-white/20 text-white text-xs sm:text-sm font-medium tracking-wide backdrop-blur-md shadow-xl hover:border-white/40 hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
-        title="Shuffle background and text colors"
+        title="Shuffle background and text colors manually"
       >
         <span
-          className="w-3 h-3 rounded-full border border-white/40 shadow-sm"
+          className="w-3 h-3 rounded-full border border-white/40 shadow-sm transition-colors duration-500"
           style={{ backgroundColor: currentBgColor }}
         />
-        <span>Random Color</span>
+        <span>Shuffle</span>
       </button>
 
       {/* Typography Switcher */}
       <button
         onClick={onToggleFont}
-        className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-black/60 hover:bg-black/90 border border-white/20 text-white text-xs sm:text-sm font-medium tracking-wide backdrop-blur-md shadow-xl hover:border-white/40 hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
+        className="hidden md:flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-black/60 hover:bg-black/90 border border-white/20 text-white text-xs sm:text-sm font-medium tracking-wide backdrop-blur-md shadow-xl hover:border-white/40 hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
         title="Change Typography"
       >
         <span className="text-white/60 font-mono text-xs">Font:</span>
