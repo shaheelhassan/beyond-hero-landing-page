@@ -182,10 +182,10 @@ export const Hero: React.FC = () => {
             alt="Beyond Hero 3D Futuristic Character"
             className="absolute bottom-0 left-1/2 -translate-x-1/2 w-auto max-w-none block select-none"
             style={{
-              height: '115%',
-              maxHeight: '115%',
-              minHeight: '80%',
-              filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.15))',
+              height: isMobile ? '68%' : '80%',
+              maxHeight: isMobile ? '72vh' : '82vh',
+              minHeight: '50%',
+              filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.2))',
             }}
           />
         </picture>
