@@ -174,28 +174,21 @@ export const Hero: React.FC = () => {
       </div>
 
       {/* SECTION 1 - A. Character (z-index 10) */}
-      <div className="absolute inset-0 pointer-events-none z-10">
-        <img
-          src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260801_104316_80b428ea-dc99-4399-afb3-8ccb7b34b2d0.png&w=1280&q=85"
-          onError={(e) => {
-            // Fallback directly to original PNG if Higgs proxy is unavailable
-            const target = e.currentTarget
-            if (
-              target.src !==
-              'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260801_104316_80b428ea-dc99-4399-afb3-8ccb7b34b2d0.png'
-            ) {
-              target.src =
-                'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260801_104316_80b428ea-dc99-4399-afb3-8ccb7b34b2d0.png'
-            }
-          }}
-          alt="Beyond Hero Character"
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-auto max-w-none block select-none"
-          style={{
-            height: '115%',
-            maxHeight: '115%',
-            minHeight: '80%',
-          }}
-        />
+      <div className="absolute inset-0 pointer-events-none z-10 flex justify-center items-end">
+        <picture className="contents">
+          <source srcSet="/hero-character.webp" type="image/webp" />
+          <img
+            src="/hero-character.png"
+            alt="Beyond Hero 3D Futuristic Character"
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-auto max-w-none block select-none"
+            style={{
+              height: '115%',
+              maxHeight: '115%',
+              minHeight: '80%',
+              filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.15))',
+            }}
+          />
+        </picture>
       </div>
     </section>
   )
